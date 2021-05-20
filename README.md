@@ -1,42 +1,29 @@
-# LexMapr
+# LexMapr2
+
+This is a derived work from [LexMapr](https://genepio.org/lexmapr/).
 
 A Lexicon and Rule-Based Tool for Translating Short Biomedical Specimen Descriptions into Semantic Web Ontology Terms
 
-[![Build Status](https://travis-ci.org/Public-Health-Bioinformatics/LexMapr.svg?branch=master)](https://travis-ci.org/Public-Health-Bioinformatics/LexMapr)
-[![Coverage Status](https://coveralls.io/repos/github/Public-Health-Bioinformatics/LexMapr/badge.svg?branch=master)](https://coveralls.io/github/Public-Health-Bioinformatics/LexMapr?branch=master)
-[![bioconda-badge](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat-square)](http://bioconda.github.io)
-
-![alt text](./logo.png)
+What are the differences:
+ * Include the English stop words as the default.
+ * Remove the functionalities to output the text buckets and classifications.
+ * Remove the micro and macro match statuses.
 
 ## Installation
 
-### With Bioconda
-
-Set up [Bioconda](https://bioconda.github.io/), if you haven't already!
-
-Then:
-
-```
-$ conda create -n LexMapr lexmapr
-$ conda activate LexMapr
-$ python -m nltk.downloader all
-```
-
-### Without Bioconda
-
 Install [Conda](https://docs.conda.io/en/latest/miniconda.html).
 
-Create a LexMapr environment:
+Create a LexMapr2 environment:
 
 ```
-$ conda create --name LexMapr
+$ conda create --name LexMapr2
 ```
 
-Install LexMapr into your conda environment:
+Install LexMapr2 into your conda environment:
 ```
-$ conda activate LexMapr
-$ git clone https://github.com/Public-Health-Bioinformatics/LexMapr.git
-$ cd LexMapr
+$ conda activate LexMapr2
+$ git clone https://github.com/johardi/LexMapr2.git
+$ cd LexMapr2
 $ pip install .
 $ python -m nltk.downloader all
 ```
@@ -45,36 +32,76 @@ $ python -m nltk.downloader all
 
 #### Files
 
-`small_simple.csv`
+`food.csv`
 ```
-SampleId,Sample
-small_simple1,Chicken Breast
-small_simple2,Baked Potato
-small_simple3,Canned Corn
-small_simple4,Frozen Yogurt
-small_simple5,Apple Pie
+FoodId,FoodName
+F001,Chicken Breast
+F002,Baked Potato
+F003,Canned Corn
+F004,Frozen Yogurt
+F005,Apple Pie
 ```
 
-`small_simple_config.json`
+`config_foodon.json`
 ```javascript
 [
-  {"http://purl.obolibrary.org/obo/foodon.owl": "http://purl.obolibrary.org/obo/BFO_0000001"}
+  { "http://purl.obolibrary.org/obo/foodon.owl": [
+  		"http://purl.obolibrary.org/obo/FOODON_00001871",
+		"http://purl.obolibrary.org/obo/FOODON_00002373",
+		"http://purl.obolibrary.org/obo/FOODON_00002381",
+		"http://purl.obolibrary.org/obo/FOODON_00002645",
+		"http://purl.obolibrary.org/obo/FOODON_00001180",
+		"http://purl.obolibrary.org/obo/FOODON_03311737",
+		"http://purl.obolibrary.org/obo/FOODON_00001714"
+	]
+  }
 ]
 ```
 
 #### Command line
 
 ```console
-(LexMapr) foo@bar:~$ lexmapr small_simple.csv -c small_simple_config.json
-Sample_Id       Sample_Desc     Cleaned_Sample  Matched_Components
-small_simple1   Chicken Breast  chicken breast  ['chicken breast:foodon_00002703']
-small_simple2   Baked Potato    baked potato    ['potato (whole, baked):foodon_03302196']
-small_simple3   Canned Corn     canned corn     ['corn (canned):foodon_03302665']
-small_simple4   Frozen Yogurt   frozen yogurt   ['frozen yogurt:foodon_03307445']
-small_simple5   Apple Pie       apple pie       ['apple pie:foodon_00002475']
+(LexMapr2) foo@bar:~$ lexmapr2 food.csv -c config_foodon.json
+{
+   "mapping_output": {
+      "Chicken Breast:F001": "chicken breast:FOODON_00002703",
+      "Baked Potato:F002": "potato (whole, baked):FOODON_03302196",
+      "Canned Corn:F003": "corn (canned):FOODON_03302665",
+      "Frozen Yogurt:F004": "frozen yogurt:FOODON_03307445",
+      "Apple Pie:F005": "apple pie:FOODON_00002475"
+   },
+   "input_to_ontology_mapping": {
+      "F001": "FOODON_00002703",
+      "F002": "FOODON_03302196",
+      "F003": "FOODON_03302665",
+      "F004": "FOODON_03307445",
+      "F005": "FOODON_00002475"
+   },
+   "ontology_to_input_mapping": {
+      "FOODON_00002703": "F001",
+      "FOODON_03302196": "F002",
+      "FOODON_03302665": "F003",
+      "FOODON_03307445": "F004",
+      "FOODON_00002475": "F005"
+   },
+   "input_term_label": {
+      "F001": "Chicken Breast",
+      "F002": "Baked Potato",
+      "F003": "Canned Corn",
+      "F004": "Frozen Yogurt",
+      "F005": "Apple Pie"
+   },
+   "ontology_term_label": {
+      "FOODON_00002703": "chicken breast",
+      "FOODON_03302196": "potato (whole, baked)",
+      "FOODON_03302665": "corn (canned)",
+      "FOODON_03307445": "frozen yogurt",
+      "FOODON_00002475": "apple pie"
+   }
+}
 ```
 
-## More Documentation
+## More Documentation from LexMapr
 
 [Formal documentation](https://genepio.org/lexmapr-documentation/)
 
