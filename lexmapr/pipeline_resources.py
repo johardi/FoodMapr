@@ -113,6 +113,9 @@ def get_config_resources(path, no_cache):
         for json_object in reversed(config_json):
             (ontology_iri, root_entity_iri), = json_object.items()
 
+            if isinstance(root_entity_iri, list):
+                root_entity_iri = ",".join(root_entity_iri)
+
             # Arguments for ontofetch.py
             if root_entity_iri == "":
                 sys.argv = ["", ontology_iri, "-o", fetched_ontologies_dir_path + "/"]
