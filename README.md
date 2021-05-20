@@ -11,15 +11,15 @@ What are the differences:
 
 ## Installation
 
-Install [Conda](https://docs.conda.io/en/latest/miniconda.html).
+1. Install [Conda](https://docs.conda.io/en/latest/miniconda.html).
 
-Create a LexMapr2 environment:
+2. Create a LexMapr2 environment:
 
 ```
 $ conda create --name LexMapr2
 ```
 
-Install LexMapr2 into your conda environment:
+3. Install LexMapr2 into your conda environment:
 ```
 $ conda activate LexMapr2
 $ git clone https://github.com/johardi/LexMapr2.git
@@ -30,9 +30,7 @@ $ python -m nltk.downloader all
 
 ## Usage
 
-#### Files
-
-`food.csv`
+1. Prepare the input file: `food.csv`
 ```
 FoodId,FoodName
 F001,Chicken Breast
@@ -42,7 +40,7 @@ F004,Frozen Yogurt
 F005,Apple Pie
 ```
 
-`config_foodon.json`
+2. Prepare the configuration file: `config_foodon.json`
 ```javascript
 [
   { "http://purl.obolibrary.org/obo/foodon.owl": [
@@ -58,7 +56,7 @@ F005,Apple Pie
 ]
 ```
 
-#### Command line
+3. Run the command on the Terminal console
 
 ```console
 (LexMapr2) foo@bar:~$ lexmapr2 food.csv -c config_foodon.json
@@ -105,6 +103,6 @@ F005,Apple Pie
 
 [Formal documentation](https://genepio.org/lexmapr-documentation/)
 
-[Tutorial slides for users with little or no experience with command line](./docs/tutorial_slides.pdf)
+[Tutorial slides](./docs/tutorial_slides.pdf) for users with little or no experience with command line
 
-[Tutorial slides for **IFSAC users** with little or no experience with command line](./docs/ifsac_tutorial_slides.pdf)
+[Tutorial slides](./docs/ifsac_tutorial_slides.pdf) for **IFSAC users** with little or no experience with command line
