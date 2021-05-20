@@ -7,9 +7,11 @@ import re
 from dateutil.parser import parse
 import inflection
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 from nltk.tokenize.treebank import TreebankWordDetokenizer
 from nltk import pos_tag
 
+default_stop_words = stopwords.words("english")
 
 def singularize_token(token, lookup_table, micro_status):
     """Singularizes the string token, if applicable.
@@ -136,14 +138,16 @@ def get_cleaned_sample(input_sample, token, lookup_table):
     :return: cleaned_sample
     :rtype: str
     """
-
     cleaned_sample = input_sample
-    if (not input_sample and token not in lookup_table[
-            "stop_words"]):
-        cleaned_sample = token
-    elif (token not in lookup_table[
-            "stop_words"]):
-        cleaned_sample = input_sample + " " + token
+
+    # Check the default (english) stop words
+    if token not in default_stop_words:
+        # Check the user's stop words
+        if token not in lookup_table["stop_words"]:
+            if input_sample:
+                cleaned_sample = input_sample + " " + token
+            else:
+                cleaned_sample = token
     return cleaned_sample
 
 
