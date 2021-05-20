@@ -117,9 +117,7 @@ def find_match(map_result, ontology_lookup_table):
                                                          ontology_lookup_table, [])
 
         cleaned_sample = helpers.remove_duplicate_tokens(cleaned_sample)
-        print(sample)
-        print(cleaned_sample)
-        
+
         # Attempt full term match
         full_term_match = helpers.map_term(sample, ontology_lookup_table)
 
