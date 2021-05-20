@@ -235,6 +235,16 @@ def is_date(inputstring):
         return False
 
 
+def is_single_letter(inputstring):
+    """Determines whether a string contains a single letter
+
+    :param inputstring:
+    :return:
+    :rtype: bool
+    """
+    return len(inputstring) == 1
+
+
 def ngrams(input, gram_value):
     """Get ngrams with a given value of gram_value.
 
