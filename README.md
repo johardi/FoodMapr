@@ -43,16 +43,16 @@ F005,Apple Pie
 2. Prepare the configuration file: `config_foodon.json`
 ```javascript
 [
-  { "http://purl.obolibrary.org/obo/foodon.owl": [
-  		"http://purl.obolibrary.org/obo/FOODON_00001871",
-		"http://purl.obolibrary.org/obo/FOODON_00002373",
-		"http://purl.obolibrary.org/obo/FOODON_00002381",
-		"http://purl.obolibrary.org/obo/FOODON_00002645",
-		"http://purl.obolibrary.org/obo/FOODON_00001180",
-		"http://purl.obolibrary.org/obo/FOODON_03311737",
-		"http://purl.obolibrary.org/obo/FOODON_00001714"
-	]
-  }
+   { "http://purl.obolibrary.org/obo/foodon.owl": [
+         "http://purl.obolibrary.org/obo/FOODON_00001871",
+         "http://purl.obolibrary.org/obo/FOODON_00002373",
+         "http://purl.obolibrary.org/obo/FOODON_00002381",
+         "http://purl.obolibrary.org/obo/FOODON_00002645",
+         "http://purl.obolibrary.org/obo/FOODON_00001180",
+         "http://purl.obolibrary.org/obo/FOODON_03311737",
+         "http://purl.obolibrary.org/obo/FOODON_00001714"
+      ]
+   }
 ]
 ```
 
