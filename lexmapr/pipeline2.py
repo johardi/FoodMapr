@@ -213,7 +213,8 @@ def find_match(map_result, ontology_lookup_table):
                     onto_term_label = get_term_label(single_value)
                     mapping_output[input_term] = single_value
                     input_to_ontology_mapping[input_term_id] = onto_term_id
-                    ontology_to_input_mapping[onto_term_id]= input_term_id
+                    if onto_term_id not in ontology_to_input_mapping:
+                        ontology_to_input_mapping[onto_term_id]= input_term_id
                     ontology_term_label_dict[onto_term_id] = onto_term_label
                     input_term_label_dict[input_term_id] = input_term_label
                 else:
