@@ -5,9 +5,9 @@ import os
 import argparse
 import logging
 
-import lexmapr.pipeline2
+import foodmapr.pipeline
 
-logger = logging.getLogger("lexmapr")
+logger = logging.getLogger("foodmapr")
 
 script_name = os.path.basename(os.path.realpath(sys.argv[0]))
 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     parser.add_argument("--no-cache", action="store_true",
                         help="Ignore or replace online cached resources, if there are any.")
     parser.add_argument("-v", "--version", action="version",
-                        version="%(prog)s " + lexmapr.__version__)
+                        version="%(prog)s " + foodmapr.__version__)
     parser.add_argument("-p", "--profile", choices=["ifsac", "anz"],
                         help="Pre-defined sets of command-line arguments for specialized purposes:"
                              "\n"
@@ -51,4 +51,4 @@ if __name__ == "__main__":
                              "  - outputs content to ``anz_output.tsv``")
     args = parser.parse_args()
 
-    lexmapr.pipeline2.run(args)
+    foodmapr.pipeline.run(args)

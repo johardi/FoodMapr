@@ -16,12 +16,12 @@ Programming Language :: Python :: 3.6
 Operating System :: POSIX :: Linux
 """.strip().split('\n')
 
-setup(name='lexmapr2',
+setup(name='foodmapr',
       version=__version__,
-      description='A derived work of LexMapr',
+      description='A derived work of LexMapr focusing on food items and products',
       author='Josef Hardi',
       author_email='josef.hardi@gmail.com',
-      url='https://github.com/johardi/LexMapr',
+      url='https://github.com/johardi/FoodMapr',
       license='GPL-3.0',
       classifiers=classifiers,
       install_requires=[
@@ -36,5 +36,5 @@ setup(name='lexmapr2',
       tests_require=['nose'],
       packages=find_packages(),
       include_package_data=True,
-      scripts=['bin/lexmapr2']
+      scripts=['bin/foodmapr']
 )
