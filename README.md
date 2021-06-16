@@ -1,29 +1,28 @@
-# LexMapr2
+# FoodMapr
 
-This is a derived work from [LexMapr](https://genepio.org/lexmapr/).
-
-A Lexicon and Rule-Based Tool for Translating Short Biomedical Specimen Descriptions into Semantic Web Ontology Terms
+This is a derived work from [LexMapr](https://genepio.org/lexmapr/) that focuses on food items and products.
 
 What are the differences:
  * Include the English stop words as the default.
  * Remove the functionalities to output the text buckets and classifications.
  * Remove the micro and macro match statuses.
+ * Introduce a new profile called "anz" to map the [Australia New Zealand Food Standards](https://www.foodstandards.gov.au/code/Pages/default.aspx)
 
 ## Installation
 
 1. Install [Conda](https://docs.conda.io/en/latest/miniconda.html).
 
-2. Create a LexMapr2 environment:
+2. Create a FoodMapr environment:
 
 ```
-$ conda create --name LexMapr2
+$ conda create --name FoodMapr
 ```
 
-3. Install LexMapr2 into your conda environment:
+3. Install FoodMapr into your conda environment:
 ```
-$ conda activate LexMapr2
-$ git clone https://github.com/johardi/LexMapr2.git
-$ cd LexMapr2
+$ conda activate FoodMapr
+$ git clone https://github.com/johardi/FoodMapr.git
+$ cd FoodMapr
 $ pip install .
 $ python -m nltk.downloader all
 ```
