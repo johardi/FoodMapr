@@ -6,7 +6,11 @@ What are the differences:
  * Include the English stop words as the default.
  * Remove the functionalities to output the text buckets and classifications.
  * Remove the micro and macro match statuses.
- * Introduce a new profile called "anz" to map the [Australia New Zealand Food Standards](https://www.foodstandards.gov.au/code/Pages/default.aspx)
+ * Introduce a new profile called "anz" to map the [Australia New Zealand Food Standards](https://www.foodstandards.gov.au/code/Pages/default.aspx) to the [Food Ontology](https://foodon.org/) concepts.
+ 
+   ```
+   $ foodmapr input.csv -p anz -o output.json
+   ```
 
 ## Installation
 
