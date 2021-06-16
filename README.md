@@ -58,7 +58,7 @@ F005,Apple Pie
 3. Run the command on the Terminal console
 
 ```console
-(LexMapr2) foo@bar:~$ lexmapr2 food.csv -c config_foodon.json
+(LexMapr2) foo@bar:~$ foodmapr food.csv -c config_foodon.json
 {
    "mapping_output": {
       "Chicken Breast:F001": "chicken breast:FOODON_00002703",
