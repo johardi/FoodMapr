@@ -1,4 +1,5 @@
 include lexmapr/resources/*
 include lexmapr/resources/profiles/*
 include lexmapr/resources/profiles/ifsac/*
+include lexmapr/resources/profiles/anz/*
 include lexmapr/predefined_resources/*
