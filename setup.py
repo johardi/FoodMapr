@@ -2,7 +2,7 @@ from distutils.core import setup
 
 from setuptools import find_packages
 
-from lexmapr import __version__
+from foodmapr import __version__
 
 classifiers = """
 Development Status :: 4 - Beta
