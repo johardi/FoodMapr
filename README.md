@@ -28,7 +28,8 @@ $ conda activate FoodMapr
 $ git clone https://github.com/johardi/FoodMapr.git
 $ cd FoodMapr
 $ pip install .
-$ python -m nltk.downloader all
+$ python -m nltk.downloader punkt
+$ python -m nltk.downloader stopwords
 ```
 
 ## Usage
