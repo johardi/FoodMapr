@@ -2,14 +2,16 @@
 
 import sys
 import os
-import argparse
 import logging
+
+from argparse import ArgumentParser, ArgumentTypeError, RawTextHelpFormatter
 
 import foodmapr.pipeline
 
 logger = logging.getLogger("foodmapr")
 
 script_name = os.path.basename(os.path.realpath(sys.argv[0]))
+
 
 def valid_input_file(path):
     """Raises appropriate errors if input file is invalid.
@@ -22,7 +24,8 @@ def valid_input_file(path):
     """
     _, ext = os.path.splitext(path)
     if ext != ".csv" and ext != ".tsv":
-        raise argparse.ArgumentTypeError("Please supply a csv or tsv input file")
+        raise ArgumentTypeError(
+            "Please supply a csv or tsv input file")
 
     if not os.path.exists(path):
         raise FileNotFoundError(path + " not found")
@@ -31,8 +34,9 @@ def valid_input_file(path):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument("input_file", help="Input csv or tsv file", type=valid_input_file)
+    parser = ArgumentParser(formatter_class=RawTextHelpFormatter)
+    parser.add_argument("input_file", type=valid_input_file,
+                        help="Input csv or tsv file")
     parser.add_argument("-o", "--output", nargs="?", help="Output file")
     parser.add_argument("-c", "--config",
                         help="Path to JSON file containing the IRI of ontologies to fetch terms from")
@@ -47,9 +51,11 @@ if __name__ == "__main__":
                              "\n"
                              "* ifsac: \n"
                              "  - maps samples to food and environmental resources\n"
-                             "  - classifies samples into ifsac labels\n"
+                             "  - classifies samples into IFSAC labels\n"
                              "  - outputs content to ``ifsac_output.tsv``\n"
                              "* anz: \n"
+                             "  - maps samples to food ontology resources\n"
+                             "  - classifies samples into Food Standards Australia New Zealand labels\n"
                              "  - outputs content to ``anz_output.tsv``")
     args = parser.parse_args()
 
