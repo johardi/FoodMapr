@@ -15,6 +15,7 @@ from nltk.tokenize import word_tokenize
 import lexmapr.pipeline_resources as pipeline_resources
 import lexmapr.pipeline_helpers as helpers
 
+
 def run(args):
 
     """
@@ -30,10 +31,12 @@ def run(args):
     ontology_lookup_table = None
     if args.config:
         # Fetch online ontology terms specified in config file.
-        ontology_lookup_table = pipeline_resources.get_config_resources(args.config, args.no_cache)
+        ontology_lookup_table = pipeline_resources.get_config_resources(
+            args.config, args.no_cache)
     elif args.profile:
         # Fetch online ontology terms specified in profile.
-        ontology_lookup_table = pipeline_resources.get_profile_resources(args.profile)
+        ontology_lookup_table = pipeline_resources.get_profile_resources(
+            args.profile)
 
     # Input file
     fr = open(args.input_file, "r")
@@ -54,14 +57,14 @@ def run(args):
         "input_term_label": {},
         "ontology_term_label": {}
     }
-    
+
     for row in fr_reader:
         input_term_id = row[0].strip()
         input_term_label = row[1].strip()
         input_term = "%s:%s" % (input_term_label, input_term_id)
         map_result["mapping_output"][input_term] = ""
 
-    map_result = find_match(map_result, ontology_lookup_table);
+    map_result = find_match(map_result, ontology_lookup_table)
 
     fw = open(args.output, 'w') if args.output else sys.stdout
     fw.write(json.dumps(map_result, indent=3))
@@ -72,8 +75,8 @@ def find_match(map_result, ontology_lookup_table):
     mapping_output = map_result["mapping_output"]
     input_to_ontology_mapping = map_result["input_to_ontology_mapping"]
     ontology_to_input_mapping = map_result["ontology_to_input_mapping"]
-    input_term_label_dict = map_result["input_term_label"]
-    ontology_term_label_dict = map_result["ontology_term_label"]
+    input_term_label_map = map_result["input_term_label"]
+    ontology_term_label_map = map_result["ontology_term_label"]
 
     for input_term, mapping_object in mapping_output.items():
 
@@ -100,20 +103,22 @@ def find_match(map_result, ontology_lookup_table):
             # Some preprocessing
             token = helpers.preprocess(token)
 
-            lemma = helpers.singularize_token(token, ontology_lookup_table, [])
-            lemma = helpers.spelling_correction(lemma, ontology_lookup_table, [])
-            lemma = helpers.abbreviation_normalization_token(lemma, ontology_lookup_table, [])
-            lemma = helpers.non_English_normalization_token(lemma, ontology_lookup_table, [])
-            
-            cleaned_sample = helpers.get_cleaned_sample(cleaned_sample, lemma, 
-                                                        ontology_lookup_table)
+            lemma = helpers.singularize_token(
+                token, ontology_lookup_table, [])
+            lemma = helpers.spelling_correction(
+                lemma, ontology_lookup_table, [])
+            lemma = helpers.abbreviation_normalization_token(
+                lemma, ontology_lookup_table, [])
+            lemma = helpers.non_English_normalization_token(
+                lemma, ontology_lookup_table, [])
+
+            cleaned_sample = helpers.get_cleaned_sample(
+                cleaned_sample, lemma, ontology_lookup_table)
             cleaned_sample = re.sub(' +', ' ', cleaned_sample)
-            cleaned_sample =\
-                helpers.abbreviation_normalization_phrase(cleaned_sample,
-                                                          ontology_lookup_table, [])
-            cleaned_sample =\
-                helpers.non_English_normalization_phrase(cleaned_sample,
-                                                         ontology_lookup_table, [])
+            cleaned_sample = helpers.abbreviation_normalization_phrase(
+                cleaned_sample, ontology_lookup_table, [])
+            cleaned_sample = helpers.non_English_normalization_phrase(
+                cleaned_sample, ontology_lookup_table, [])
 
         cleaned_sample = helpers.remove_duplicate_tokens(cleaned_sample)
 
@@ -145,8 +150,8 @@ def find_match(map_result, ontology_lookup_table):
             mapping_output[input_term] = ontology_term
             input_to_ontology_mapping[input_term_id] = ontology_term_id
             ontology_to_input_mapping[ontology_term_id] = input_term_id
-            ontology_term_label_dict[ontology_term_id] = full_term_match["term"]
-            input_term_label_dict[input_term_id] = input_term_label
+            ontology_term_label_map[ontology_term_id] = full_term_match["term"]
+            input_term_label_map[input_term_id] = input_term_label
         else:
             # Attempt various component matches
             component_matches = []
@@ -157,7 +162,8 @@ def find_match(map_result, ontology_lookup_table):
                     concat_gram_chunk = " ".join(gram_chunk)
                     gram_tokens = word_tokenize(concat_gram_chunk)
                     gram_permutations =\
-                        list(OrderedDict.fromkeys(permutations(concat_gram_chunk.split())))
+                        list(OrderedDict.fromkeys(permutations(
+                            concat_gram_chunk.split())))
 
                     # gram_tokens covered in prior component match
                     if set(gram_tokens) <= covered_tokens:
@@ -165,8 +171,9 @@ def find_match(map_result, ontology_lookup_table):
 
                     for gram_permutation in gram_permutations:
                         gram_permutation_str = " ".join(gram_permutation)
-                        component_match = helpers.map_term(gram_permutation_str,
-                                                           ontology_lookup_table)
+                        component_match =\
+                            helpers.map_term(gram_permutation_str,
+                                             ontology_lookup_table)
                         if not component_match:
                             # Try again with suffixes
                             component_match =\
@@ -196,7 +203,8 @@ def find_match(map_result, ontology_lookup_table):
             for component_match in component_matches:
                 if component_match["id"] not in ancestors:
                     matched_component =\
-                        "%s:%s" % (component_match["term"], component_match["id"])
+                        "%s:%s" % (component_match["term"],
+                                   component_match["id"])
                     matched_components.append(matched_component)
 
             # TODO: revisit this step.
@@ -213,18 +221,19 @@ def find_match(map_result, ontology_lookup_table):
                     mapping_output[input_term] = single_value
                     input_to_ontology_mapping[input_term_id] = onto_term_id
                     if onto_term_id not in ontology_to_input_mapping:
-                        ontology_to_input_mapping[onto_term_id]= input_term_id
-                    ontology_term_label_dict[onto_term_id] = onto_term_label
-                    input_term_label_dict[input_term_id] = input_term_label
+                        ontology_to_input_mapping[onto_term_id] = input_term_id
+                    ontology_term_label_map[onto_term_id] = onto_term_label
+                    input_term_label_map[input_term_id] = input_term_label
                 else:
                     mapping_output[input_term] = matched_components
                     input_to_ontology_mapping[input_term_id] =\
-                        [onto_term_id for onto_term_id in map(lambda s: get_term_id(s), matched_components)]
-                    input_term_label_dict[input_term_id] = input_term_label
+                        [onto_term_id for onto_term_id in map(
+                            lambda s: get_term_id(s), matched_components)]
+                    input_term_label_map[input_term_id] = input_term_label
                     for ontology_term in matched_components:
                         onto_term_id = get_term_id(ontology_term)
                         onto_term_label = get_term_label(ontology_term)
-                        ontology_term_label_dict[onto_term_id] = onto_term_label
+                        ontology_term_label_map[onto_term_id] = onto_term_label
 
     return map_result
 
