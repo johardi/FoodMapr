@@ -13,7 +13,6 @@ import json
 from nltk.tokenize import word_tokenize
 
 import lexmapr.pipeline_resources as pipeline_resources
-from lexmapr.pipeline_classification import classify_sample
 import lexmapr.pipeline_helpers as helpers
 
 def run(args):
