@@ -4,6 +4,9 @@ import sys
 import os
 import logging
 
+import nltk
+nltk.data.path.append(os.environ.get("USER_NLTK_DATA", "/nltk_data"))
+
 from argparse import ArgumentParser, ArgumentTypeError, RawTextHelpFormatter
 
 import foodmapr.pipeline
