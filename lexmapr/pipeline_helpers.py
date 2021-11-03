@@ -381,7 +381,6 @@ def retain_phrase(term_list):
             returned_item = item + ":" + onto_id
             returned_set.append(returned_item)
             returned_set_final = list(OrderedDict.fromkeys(returned_set))
-    returned_set_final = sorted(returned_set_final)
 
     return returned_set_final
 
